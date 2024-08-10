@@ -9,9 +9,9 @@ var path_1 = __importDefault(require("path"));
 dotenv_1.default.config({
     path: path_1.default.resolve(__dirname, '../.env'),
 });
+console.log(process.env.PASSWORD);
 var app = (0, express_1.default)();
 var port = 3000;
-console.log(process.env.DB_HOST);
 app.get('/', function (req, res) {
     res.send('Hello World!');
 });
