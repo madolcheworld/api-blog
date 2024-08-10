@@ -5,7 +5,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var express_1 = __importDefault(require("express"));
 var dotenv_1 = __importDefault(require("dotenv"));
-dotenv_1.default.config();
+var path_1 = __importDefault(require("path"));
+dotenv_1.default.config({
+    path: path_1.default.resolve(__dirname, '../.env'),
+});
 var app = (0, express_1.default)();
 var port = 3000;
 console.log(process.env.DB_HOST);
