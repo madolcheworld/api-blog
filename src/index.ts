@@ -1,10 +1,12 @@
 import express from 'express';
 import dotenv from 'dotenv';
-import { connect } from './libs/database/database';
+import { connection } from './libs/database/database';
 dotenv.config();
-connect();
 const app = express();
 const port = 3000;
+
+console.log(process.env.DB_HOST);
+
 app.get('/', (req, res) => {
   res.send('Hello World!')
 })
