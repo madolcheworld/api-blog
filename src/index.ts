@@ -1,6 +1,8 @@
 import express from 'express';
 import dotenv from 'dotenv';
+import { connect } from './libs/database/database';
 dotenv.config();
+connect();
 const app = express();
 const port = 3000;
 app.get('/', (req, res) => {
