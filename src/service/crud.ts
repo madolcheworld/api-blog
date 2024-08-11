@@ -1,5 +1,4 @@
-import Connection from "../config/db";
-import IProduk from "../interface/db/iproduk";
+import Connection from "../config/db"
 import dataUpdateFormat from "../lib/dataupdateformat";
 export default class Crud {
     private connection;
@@ -11,7 +10,7 @@ export default class Crud {
         
     }
 
-    async create(data: IProduk[] | IProduk) {
+    async create(data: string[] | string) {
         let query, result;
         if (Array.isArray(data)) {
             const columns = Object.keys(data[0])
