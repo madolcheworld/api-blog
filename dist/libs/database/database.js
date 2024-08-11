@@ -5,10 +5,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var promise_1 = __importDefault(require("mysql2/promise"));
 var connection = promise_1.default.createPool({
-    host: process.env.DB_HOST || 'localhost',
-    user: process.env.DB_USER || 'root',
-    password: process.env.DB_PASSWORD || 'riyanhafni05',
-    database: process.env.DB_NAME || 'inventory',
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_NAME,
 });
 exports.default = connection;
 //# sourceMappingURL=database.js.map

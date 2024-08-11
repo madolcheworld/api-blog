@@ -1,14 +1,14 @@
 import express from 'express';
 import dotenv from 'dotenv';
-import path from 'path';
-import connection from './libs/database/database';
-
-dotenv.config({
-  path: path.resolve(__dirname, '../.env'),
-});
-
-console.log(process.env.PASSWORD);
-
+dotenv.config();
+import Produk from './libs/class/produk';
+async function main() {
+  const produk = new Produk();
+  produk.create({ nama: 'buku', harga: 10000, stock: 10 });
+  const rows = await produk.getAll();
+  console.log(rows)
+}
+main();
 const app = express();
 const port = 3000;
 app.get('/', (req, res) => {

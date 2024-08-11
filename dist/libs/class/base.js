@@ -39,34 +39,39 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var express_1 = __importDefault(require("express"));
-var dotenv_1 = __importDefault(require("dotenv"));
-dotenv_1.default.config();
-var produk_1 = __importDefault(require("./libs/class/produk"));
-function main() {
-    return __awaiter(this, void 0, void 0, function () {
-        var produk, rows;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0:
-                    produk = new produk_1.default();
-                    produk.create({ nama: 'buku', harga: 10000, stock: 10 });
-                    return [4 /*yield*/, produk.getAll()];
-                case 1:
-                    rows = _a.sent();
-                    console.log(rows);
-                    return [2 /*return*/];
-            }
+var database_1 = __importDefault(require("../database/database"));
+var Base = /** @class */ (function () {
+    function Base(table) {
+        this.connection = database_1.default;
+        this.table = table;
+    }
+    Base.prototype.getAll = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            var rows;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, this.connection.query("SELECT * FROM ".concat(this.table))];
+                    case 1:
+                        rows = (_a.sent())[0];
+                        return [2 /*return*/, rows];
+                }
+            });
         });
-    });
-}
-main();
-var app = (0, express_1.default)();
-var port = 3000;
-app.get('/', function (req, res) {
-    res.send('Hello World!');
-});
-app.listen(port, function () {
-    console.log("Example app listening at http://localhost:".concat(port));
-});
-//# sourceMappingURL=index.js.map
+    };
+    Base.prototype.create = function (data) {
+        return __awaiter(this, void 0, void 0, function () {
+            var insertId;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, this.connection.query("INSERT INTO ".concat(this.table, " SET ?"), [data])];
+                    case 1:
+                        insertId = (_a.sent()).insertId;
+                        return [2 /*return*/, insertId];
+                }
+            });
+        });
+    };
+    return Base;
+}());
+exports.default = Base;
+//# sourceMappingURL=base.js.map

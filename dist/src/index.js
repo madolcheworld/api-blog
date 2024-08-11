@@ -40,23 +40,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var express_1 = __importDefault(require("express"));
-var dotenv_1 = __importDefault(require("dotenv"));
-dotenv_1.default.config();
-var produk_1 = __importDefault(require("./libs/class/produk"));
+var database_1 = require("./libs/database/database");
 function main() {
     return __awaiter(this, void 0, void 0, function () {
-        var produk, rows;
         return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0:
-                    produk = new produk_1.default();
-                    produk.create({ nama: 'buku', harga: 10000, stock: 10 });
-                    return [4 /*yield*/, produk.getAll()];
-                case 1:
-                    rows = _a.sent();
-                    console.log(rows);
-                    return [2 /*return*/];
-            }
+            console.log((0, database_1.getENV)());
+            console.log(database_1.connection);
+            return [2 /*return*/];
         });
     });
 }
