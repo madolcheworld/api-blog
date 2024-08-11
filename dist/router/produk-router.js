@@ -10,5 +10,6 @@ var router = express_1.default.Router();
 var controller = new produk_controller_1.default();
 router.get('/produk', controller.getProduk);
 router.post('/produk', produk_middleware_1.default, controller.createProduk);
+router.put('/produk/:id', controller.updateProduk);
 exports.default = router;
 //# sourceMappingURL=produk-router.js.map

@@ -98,6 +98,35 @@ var ProdukController = /** @class */ (function () {
             });
         });
     };
+    ProdukController.prototype.updateProduk = function (req, res) {
+        return __awaiter(this, void 0, void 0, function () {
+            var id, data, result, response, error_3, response;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 2, , 3]);
+                        id = req.params.id;
+                        data = req.body;
+                        return [4 /*yield*/, new produk_repository_1.default().updateProduk(id, data)];
+                    case 1:
+                        result = _a.sent();
+                        response = {
+                            message: 'success',
+                            data: result
+                        };
+                        return [2 /*return*/, res.status(200).json(response)];
+                    case 2:
+                        error_3 = _a.sent();
+                        response = {
+                            message: 'error',
+                            error: error_3
+                        };
+                        return [2 /*return*/, res.status(500).json(response)];
+                    case 3: return [2 /*return*/];
+                }
+            });
+        });
+    };
     return ProdukController;
 }());
 exports.default = ProdukController;

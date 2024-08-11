@@ -40,6 +40,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var db_1 = __importDefault(require("../config/db"));
+var dataupdateformat_1 = __importDefault(require("../lib/dataupdateformat"));
 var Crud = /** @class */ (function () {
     function Crud(tableName) {
         this.connection = db_1.default;
@@ -47,15 +48,25 @@ var Crud = /** @class */ (function () {
     }
     Crud.prototype.create = function (data) {
         return __awaiter(this, void 0, void 0, function () {
-            var query, result;
+            var query, result, columns, values;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        query = "INSERT INTO ".concat(this.tableName, " SET ?");
-                        return [4 /*yield*/, this.connection.query(query, data)];
+                        if (!Array.isArray(data)) return [3 /*break*/, 2];
+                        columns = Object.keys(data[0]);
+                        values = data.map(function (item) { return "(".concat(Object.values(item).map(function (value) { return "'".concat(value, "'"); }).join(', '), ")"); }).join(', ');
+                        query = "INSERT INTO ".concat(this.tableName, " (").concat(columns.join(', '), ") VALUES ").concat(values);
+                        return [4 /*yield*/, this.connection.query(query)];
                     case 1:
                         result = _a.sent();
-                        return [2 /*return*/, result];
+                        return [3 /*break*/, 4];
+                    case 2:
+                        query = "INSERT INTO ".concat(this.tableName, " SET ?");
+                        return [4 /*yield*/, this.connection.query(query, data)];
+                    case 3:
+                        result = _a.sent();
+                        _a.label = 4;
+                    case 4: return [2 /*return*/, result];
                 }
             });
         });
@@ -87,7 +98,8 @@ var Crud = /** @class */ (function () {
         return this;
     };
     Crud.prototype.where = function (field, operator, value) {
-        this.query += " WHERE ".concat(field, " ").concat(operator, " \"").concat(value, "\"");
+        var query = this.query += " WHERE ".concat(field, " ").concat(operator, " ?");
+        this.connection.query(query, value);
         return this;
     };
     Crud.prototype.groupBy = function (field) {
@@ -104,6 +116,37 @@ var Crud = /** @class */ (function () {
     };
     Crud.prototype.get = function () {
         return this.connection.query(this.query);
+    };
+    Crud.prototype.deleteById = function (id) {
+        return __awaiter(this, void 0, void 0, function () {
+            var query, result;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        query = "DELETE FROM ".concat(this.tableName, " WHERE id = ?");
+                        return [4 /*yield*/, this.connection.query(query, [id])];
+                    case 1:
+                        result = _a.sent();
+                        return [2 /*return*/, result];
+                }
+            });
+        });
+    };
+    Crud.prototype.updateById = function (id, data) {
+        return __awaiter(this, void 0, void 0, function () {
+            var dataUpdate, query, result;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        dataUpdate = (0, dataupdateformat_1.default)(data);
+                        query = "UPDATE ".concat(this.tableName, " SET ").concat(dataUpdate, " WHERE id = ?");
+                        return [4 /*yield*/, this.connection.query(query, [id])];
+                    case 1:
+                        result = _a.sent();
+                        return [2 /*return*/, result];
+                }
+            });
+        });
     };
     return Crud;
 }());

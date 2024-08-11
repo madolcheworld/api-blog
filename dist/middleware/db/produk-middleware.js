@@ -44,31 +44,54 @@ var produk_validation_1 = __importDefault(require("../../validation/produk-valid
 ;
 function default_1(req, res, next) {
     return __awaiter(this, void 0, void 0, function () {
-        var error, response, error_1, response;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
+        var _i, _a, data, error, response, error, response, error_1, response;
+        return __generator(this, function (_b) {
+            switch (_b.label) {
                 case 0:
-                    _a.trys.push([0, 2, , 3]);
-                    return [4 /*yield*/, produk_validation_1.default.validate(req.body)];
+                    _b.trys.push([0, 8, , 9]);
+                    if (!Array.isArray(req.body)) return [3 /*break*/, 5];
+                    _i = 0, _a = req.body;
+                    _b.label = 1;
                 case 1:
-                    error = (_a.sent()).error;
+                    if (!(_i < _a.length)) return [3 /*break*/, 4];
+                    data = _a[_i];
+                    return [4 /*yield*/, produk_validation_1.default.validate(data)];
+                case 2:
+                    error = (_b.sent()).error;
                     if (error) {
                         response = {
                             message: 'error',
-                            error: error
+                            error: error,
                         };
                         return [2 /*return*/, res.status(400).json(response)];
                     }
+                    _b.label = 3;
+                case 3:
+                    _i++;
+                    return [3 /*break*/, 1];
+                case 4: return [3 /*break*/, 7];
+                case 5: return [4 /*yield*/, produk_validation_1.default.validate(req.body)];
+                case 6:
+                    error = (_b.sent()).error;
+                    if (error) {
+                        response = {
+                            message: 'error',
+                            error: error,
+                        };
+                        return [2 /*return*/, res.status(400).json(response)];
+                    }
+                    _b.label = 7;
+                case 7:
                     next();
-                    return [3 /*break*/, 3];
-                case 2:
-                    error_1 = _a.sent();
+                    return [3 /*break*/, 9];
+                case 8:
+                    error_1 = _b.sent();
                     response = {
                         message: 'error',
-                        error: error_1
+                        error: error_1,
                     };
                     return [2 /*return*/, res.status(500).json(response)];
-                case 3: return [2 /*return*/];
+                case 9: return [2 /*return*/];
             }
         });
     });

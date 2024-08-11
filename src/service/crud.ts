@@ -1,5 +1,6 @@
 import Connection from "../config/db";
 import IProduk from "../interface/db/iproduk";
+import dataUpdateFormat from "../lib/dataupdateformat";
 export default class Crud {
     private connection;
     private tableName: string
@@ -10,9 +11,17 @@ export default class Crud {
         
     }
 
-    async create(data: IProduk) {
-        const query = `INSERT INTO ${this.tableName} SET ?`
-        const result = await this.connection.query(query, data)
+    async create(data: IProduk[] | IProduk) {
+        let query, result;
+        if (Array.isArray(data)) {
+            const columns = Object.keys(data[0])
+            const values = data.map(item => `(${Object.values(item).map(value => `'${value}'`).join(', ')})`).join(', ')
+            query = `INSERT INTO ${this.tableName} (${columns.join(', ')}) VALUES ${values}`
+            result = await this.connection.query(query)
+        } else {
+            query = `INSERT INTO ${this.tableName} SET ?`
+            result = await this.connection.query(query, data)
+        }
         return result
     }
 
@@ -48,7 +57,8 @@ export default class Crud {
     }
 
     where(field: string, operator: string, value: string) {
-        this.query += ` WHERE ${field} ${operator} "${value}"`
+        const query = this.query += ` WHERE ${field} ${operator} ?`
+        this.connection.query(query, value)
         return this
     }
 
@@ -70,6 +80,21 @@ export default class Crud {
     get() {
         return this.connection.query(this.query)
     }
+
+    async deleteById(id: number) {
+        const query = `DELETE FROM ${this.tableName} WHERE id = ?`
+        const result = await this.connection.query(query, [id])
+        return result   
+    }
+
+    async updateById(id:number,data:{}){
+        const dataUpdate = dataUpdateFormat(data)
+        const query = `UPDATE ${this.tableName} SET ${dataUpdate} WHERE id = ?`
+        const result = await this.connection.query(query, [id])
+        return result
+
+    }
+    
 
     
 

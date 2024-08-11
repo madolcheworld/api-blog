@@ -38,4 +38,23 @@ export default class ProdukController {
             return res.status(500).json(response)
         }
     }
+
+    async updateProduk(req : Request, res : Response) {
+        try {
+            const id = req.params.id
+            const data = req.body
+            const result = await new ProdukRepository().updateProduk(id, data)
+            const response : IResponseSuccess = {
+                message: 'success',
+                data: result
+            }
+            return res.status(200).json(response)
+        } catch (error) {
+            const response : IResponseError = {
+                message: 'error',
+                error: error
+            }
+            return res.status(500).json(response)
+        }
+    }
 }
