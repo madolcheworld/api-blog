@@ -39,18 +39,16 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var database_1 = __importDefault(require("../database/database"));
-var Base = /** @class */ (function () {
-    function Base(table) {
-        this.connection = database_1.default;
-        this.table = table;
+var produk_1 = __importDefault(require("../service/produk"));
+var ProdukRepository = /** @class */ (function () {
+    function ProdukRepository() {
     }
-    Base.prototype.getAll = function () {
+    ProdukRepository.prototype.getProduk = function () {
         return __awaiter(this, void 0, void 0, function () {
             var rows;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, this.connection.query("SELECT * FROM ".concat(this.table))];
+                    case 0: return [4 /*yield*/, new produk_1.default().read()];
                     case 1:
                         rows = (_a.sent())[0];
                         return [2 /*return*/, rows];
@@ -58,20 +56,20 @@ var Base = /** @class */ (function () {
             });
         });
     };
-    Base.prototype.create = function (data) {
+    ProdukRepository.prototype.createProduk = function (data) {
         return __awaiter(this, void 0, void 0, function () {
-            var insertId;
+            var rows;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, this.connection.query("INSERT INTO ".concat(this.table, " SET ?"), [data])];
+                    case 0: return [4 /*yield*/, new produk_1.default().create(data)];
                     case 1:
-                        insertId = (_a.sent()).insertId;
-                        return [2 /*return*/, insertId];
+                        rows = (_a.sent())[0];
+                        return [2 /*return*/, rows];
                 }
             });
         });
     };
-    return Base;
+    return ProdukRepository;
 }());
-exports.default = Base;
-//# sourceMappingURL=base.js.map
+exports.default = ProdukRepository;
+//# sourceMappingURL=produk-repository.js.map

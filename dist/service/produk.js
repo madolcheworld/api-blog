@@ -18,13 +18,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var base_1 = __importDefault(require("./base"));
+var crud_1 = __importDefault(require("../service/crud"));
 var Produk = /** @class */ (function (_super) {
     __extends(Produk, _super);
     function Produk() {
         return _super.call(this, 'produk') || this;
     }
     return Produk;
-}(base_1.default));
+}(crud_1.default));
 exports.default = Produk;
 //# sourceMappingURL=produk.js.map
