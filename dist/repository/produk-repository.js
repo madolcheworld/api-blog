@@ -45,10 +45,16 @@ var ProdukRepository = /** @class */ (function () {
     }
     ProdukRepository.prototype.getProduk = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var rows;
+            var data, rows;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, new produk_1.default().read()];
+                    case 0:
+                        data = new produk_1.default().read(['kategori.nama', 'sum(produk.stock) as total_stock'])
+                            .join('kategori')
+                            .on('produk.id_kategori', '=', 'kategori.id')
+                            .groupBy('kategori.nama')
+                            .get();
+                        return [4 /*yield*/, data];
                     case 1:
                         rows = (_a.sent())[0];
                         return [2 /*return*/, rows];

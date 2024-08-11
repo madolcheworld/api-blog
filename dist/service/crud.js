@@ -60,20 +60,50 @@ var Crud = /** @class */ (function () {
             });
         });
     };
-    Crud.prototype.read = function () {
-        return __awaiter(this, void 0, void 0, function () {
-            var query, result;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        query = "SELECT * FROM ".concat(this.tableName);
-                        return [4 /*yield*/, this.connection.query(query)];
-                    case 1:
-                        result = _a.sent();
-                        return [2 /*return*/, result];
-                }
-            });
-        });
+    Crud.prototype.read = function (filed) {
+        if (typeof filed === 'string') {
+            this.query = "SELECT ".concat(filed, " FROM ").concat(this.tableName);
+        }
+        else {
+            var fileds = filed.join(', ');
+            this.query = "SELECT ".concat(fileds, " FROM ").concat(this.tableName);
+        }
+        return this;
+    };
+    Crud.prototype.join = function (table) {
+        this.query += " JOIN ".concat(table);
+        return this;
+    };
+    Crud.prototype.leftJoin = function (table) {
+        this.query += " LEFT JOIN ".concat(table);
+        return this;
+    };
+    Crud.prototype.rightJoin = function (table) {
+        this.query += " RIGHT JOIN ".concat(table);
+        return this;
+    };
+    Crud.prototype.on = function (field, operator, value) {
+        this.query += " ON ".concat(field, " ").concat(operator, " ").concat(value);
+        return this;
+    };
+    Crud.prototype.where = function (field, operator, value) {
+        this.query += " WHERE ".concat(field, " ").concat(operator, " \"").concat(value, "\"");
+        return this;
+    };
+    Crud.prototype.groupBy = function (field) {
+        this.query += " GROUP BY ".concat(field);
+        return this;
+    };
+    Crud.prototype.asc = function (field) {
+        this.query += " ORDER BY ".concat(field, " ASC");
+        return this;
+    };
+    Crud.prototype.desc = function (field) {
+        this.query += " ORDER BY ".concat(field, " DESC");
+        return this;
+    };
+    Crud.prototype.get = function () {
+        return this.connection.query(this.query);
     };
     return Crud;
 }());
