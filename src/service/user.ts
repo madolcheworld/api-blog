@@ -1,6 +1,6 @@
 import Crud from "./crud";
-
-export default class User extends Crud {
+import Iuser from "../interface/db/iuser";
+export default class User extends Crud<Iuser> {
     constructor() {
         super('users')
     }
