@@ -4,13 +4,12 @@ import IResponseError from "../../interface/response/iresponseerror";
 export const userMiddleware = async (req: Request, res: Response, next: NextFunction) => {
     const {error} = userSchema.validate(req.body)
     if(error) {
+       
         const response: IResponseError = {
             message: 'error',
-            error: error.message
+            error: error.details
         }
-        return res.status(400).json({
-            response
-        })
+        return res.status(400).json(response)
     }
     next()
 }
