@@ -9,7 +9,8 @@ export default class Userrepository {
 
     async getUser(){
         const user = new User()
-        return await user.read('*').get()
+        const [result] = await user.read('*').get()
+        return result
     }
 
     
