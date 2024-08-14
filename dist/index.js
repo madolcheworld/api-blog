@@ -7,9 +7,11 @@ var express_1 = __importDefault(require("express"));
 var dotenv_1 = __importDefault(require("dotenv"));
 dotenv_1.default.config();
 var user_router_1 = __importDefault(require("./router/user-router"));
+var token_1 = require("./middleware/auth/token");
 var app = (0, express_1.default)();
 var port = 3000;
 app.use(express_1.default.json());
+app.use(token_1.tokenMiddleware);
 app.use("/users", user_router_1.default);
 app.listen(port, function () {
     console.log("Example app listening at http://localhost:".concat(port));

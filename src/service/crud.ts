@@ -3,6 +3,7 @@ import dataUpdateFormat from "../lib/dataupdateformat";
 export default class Crud <T> {
     private connection;
     private tableName: string
+    private queryParams: any[] = []
     query: string 
     constructor(tableName: string) {
         this.connection = Connection
@@ -57,7 +58,7 @@ export default class Crud <T> {
 
     where(field: string, operator: string, value: string) {
         const query = this.query += ` WHERE ${field} ${operator} ?`
-        this.connection.query(query, value)
+        this.queryParams.push(value)
         return this
     }
 
@@ -77,7 +78,7 @@ export default class Crud <T> {
     }
 
     get() {
-        return this.connection.query(this.query)
+        return this.connection.query(this.query, this.queryParams)
     }
 
     async deleteById(id: number) {

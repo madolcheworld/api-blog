@@ -43,6 +43,7 @@ var db_1 = __importDefault(require("../config/db"));
 var dataupdateformat_1 = __importDefault(require("../lib/dataupdateformat"));
 var Crud = /** @class */ (function () {
     function Crud(tableName) {
+        this.queryParams = [];
         this.connection = db_1.default;
         this.tableName = tableName;
     }
@@ -99,7 +100,7 @@ var Crud = /** @class */ (function () {
     };
     Crud.prototype.where = function (field, operator, value) {
         var query = this.query += " WHERE ".concat(field, " ").concat(operator, " ?");
-        this.connection.query(query, value);
+        this.queryParams.push(value);
         return this;
     };
     Crud.prototype.groupBy = function (field) {
@@ -115,7 +116,7 @@ var Crud = /** @class */ (function () {
         return this;
     };
     Crud.prototype.get = function () {
-        return this.connection.query(this.query);
+        return this.connection.query(this.query, this.queryParams);
     };
     Crud.prototype.deleteById = function (id) {
         return __awaiter(this, void 0, void 0, function () {
