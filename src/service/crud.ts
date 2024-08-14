@@ -1,7 +1,6 @@
-import Connection from "../config/db";
-import IProduk from "../interface/db/iproduk";
+import Connection from "../config/db"
 import dataUpdateFormat from "../lib/dataupdateformat";
-export default class Crud {
+export default class Crud <T> {
     private connection;
     private tableName: string
     query: string 
@@ -11,7 +10,7 @@ export default class Crud {
         
     }
 
-    async create(data: IProduk[] | IProduk) {
+    async create(data: T[] | T) {
         let query, result;
         if (Array.isArray(data)) {
             const columns = Object.keys(data[0])
