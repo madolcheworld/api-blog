@@ -40,4 +40,22 @@ export default class Categorycontroller {
         }
     }
 
+    async updateCategory(req: Request, res: Response) {
+        try {
+            const category = new Categoryrepository
+            const result = await category.updateById(Number(req.params.id), req.body)
+            const response: IResponseSuccess = {
+                message: 'success',
+                data: result
+            }
+            return res.status(200).json(response)
+        } catch (error) {
+            const response: IResponseError = {
+                message: 'error',
+                error: error
+            }
+            return res.status(400).json(response)
+        }
+    }
+
 }

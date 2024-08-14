@@ -12,4 +12,9 @@ export default class Categoryrepository {
         const [result] = await category.read('*').get()
         return result
     }
+
+    async updateById(id: number, data: Icategory) {
+        const category = new Category()
+        return await category.updateById(id, data)
+    }
 }

@@ -103,6 +103,16 @@ var Crud = /** @class */ (function () {
         this.queryParams.push(value);
         return this;
     };
+    Crud.prototype.and = function (field, operator, value) {
+        this.query += " AND ".concat(field, " ").concat(operator, " ?");
+        this.queryParams.push(value);
+        return this;
+    };
+    Crud.prototype.or = function (field, operator, value) {
+        this.query += " OR ".concat(field, " ").concat(operator, " ?");
+        this.queryParams.push(value);
+        return this;
+    };
     Crud.prototype.groupBy = function (field) {
         this.query += " GROUP BY ".concat(field);
         return this;

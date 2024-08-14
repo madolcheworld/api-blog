@@ -62,6 +62,18 @@ export default class Crud <T> {
         return this
     }
 
+    and(field: string, operator: string, value: string) {
+        this.query += ` AND ${field} ${operator} ?`;
+        this.queryParams.push(value);
+        return this;
+      }
+    
+      or(field: string, operator: string, value: string) {
+        this.query += ` OR ${field} ${operator} ?`;
+        this.queryParams.push(value);
+        return this;
+      }
+
     groupBy(field: string) {
         this.query += ` GROUP BY ${field}`
         return this
