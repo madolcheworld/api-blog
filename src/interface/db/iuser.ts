@@ -1,5 +1,5 @@
 export default interface Iuser {
-    name: string
+    nama: string
     username: string
     password: string
 }

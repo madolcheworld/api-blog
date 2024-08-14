@@ -1,14 +1,13 @@
-import {Request, Response} from 'express';
-import Iuser from '../interface/db/iuser';
-import Userrepository from '../repository/user-repository';
-import IResponseError from '../interface/response/iresponseerror';
-import IResponseSuccess from '../interface/response/iresponsesuccess';
+import Categoryrepository from "../repository/category-repository";
+import IResponseError from "../interface/response/iresponseerror";
+import IResponseSuccess from "../interface/response/iresponsesuccess";
+import {Request, Response} from "express";
 
-export default class Usercontroller {
-    async getUser(req: Request, res: Response) {
+export default class Categorycontroller {
+    async getCategory(req: Request, res: Response) {
         try {
-            const user = new Userrepository
-            const result = await user.getUser()
+            const category = new Categoryrepository
+            const result = await category.getCategory()
             const response: IResponseSuccess = {
                 message: 'success',
                 data: result
@@ -23,15 +22,10 @@ export default class Usercontroller {
         }
     }
 
-    async createUser(req: Request, res: Response) {
+    async createCategory(req: Request, res: Response) {
         try {
-            const user = new Userrepository
-            const data: Iuser = {
-                nama: req.body.nama,
-                username: req.body.username,
-                password: req.body.password
-            }
-            const result = await user.create(data)
+            const category = new Categoryrepository
+            const result = await category.create(req.body)
             const response: IResponseSuccess = {
                 message: 'success',
                 data: result
@@ -45,4 +39,5 @@ export default class Usercontroller {
             return res.status(400).json(response)
         }
     }
+
 }

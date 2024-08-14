@@ -10,7 +10,7 @@ var user_router_1 = __importDefault(require("./router/user-router"));
 var app = (0, express_1.default)();
 var port = 3000;
 app.use(express_1.default.json());
-app.use('/users', user_router_1.default);
+app.use("/users", user_router_1.default);
 app.listen(port, function () {
     console.log("Example app listening at http://localhost:".concat(port));
 });
